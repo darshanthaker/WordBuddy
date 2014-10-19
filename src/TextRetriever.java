@@ -11,6 +11,8 @@ import java.awt.*;
 
 public class TextRetriever
 {
+	
+	String text;
 
     public TextRetriever() throws Exception
     {
@@ -26,13 +28,18 @@ public class TextRetriever
                 robot.keyRelease(KeyEvent.VK_C);
                 Thread.sleep(500);
             
-                String text = getClipboardText();
+                text = getClipboardText();
                 System.out.println("TEXT IS : " + text);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+    }
+    
+    public String getText()
+    {
+    	return text;
     }
 
     static String getClipboardText() throws Exception {

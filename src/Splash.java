@@ -7,6 +7,9 @@
 
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.*;
 
 public class Splash extends JWindow {
@@ -14,6 +17,7 @@ public class Splash extends JWindow {
 	private int duration = 10000000;
 
 	private String[] results;
+	private String text;
 
 	public void showSplash() {
 		JPanel content = (JPanel)getContentPane();
@@ -23,30 +27,24 @@ public class Splash extends JWindow {
 		int width = 450;
 		int height = 500;
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (screen.width-width) / 2;
-		int y = (screen.height-height) / 2;
+		Point p = getWindowPlacement();
+		int x = (int) p.getX();
+		int y = (int) p.getY();
 		setBounds(x, y, width, height);
-
-		// Fill results
-		results = new String[100];
-		for(int i = 0; i < 100; i++) {
-			results[i] = i + "";
-		}
 		
 		// Build the screen
 		JLabel copyrt = new JLabel("Word", JLabel.CENTER);
 		copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 		content.add(copyrt, BorderLayout.NORTH);
 		
-		JList<String> list = new JList<String>(results);
-		list.setFont(new Font("Sans-Serif", Font.BOLD, 24));
-		content.add(new JScrollPane(list), BorderLayout.CENTER);
+		
         MouseListener listener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try
                 {
-                    TextRetriever text = new TextRetriever();
+                    TextRetriever retriever = new TextRetriever();
+                    text = retriever.getText();
                 }
                 catch (Exception f)
                 {
@@ -74,8 +72,15 @@ public class Splash extends JWindow {
             {
             }
         };
-        
+        FilePoller poller = new FilePoller(text);
+		results = poller.getSynonyms();
+		System.out.println(Arrays.toString(results));
+		
+        JList<String> list = new JList<String>(results);
+		list.setFont(new Font("Sans-Serif", Font.BOLD, 24));
+		content.add(new JScrollPane(list), BorderLayout.CENTER);
         list.addMouseListener(listener);
+       
 		
 		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
 
@@ -83,18 +88,29 @@ public class Splash extends JWindow {
 		setVisible(true);
 	}
 
+	private Point getWindowPlacement() {
+		double x = MouseInfo.getPointerInfo().getLocation().getX();
+		double y = MouseInfo.getPointerInfo().getLocation().getY();
+
+		Point p = new Point();
+		p.setLocation(x, y);
+		return p;
+	}
+
 	public void start() {
 		// Throw a nice little title page up on the screen firs
 		// Normally, we'd call splash.showSplash() and get on with the program.
 		// But, since this is only a test...
-		showSplash();
-        try
+		try
         {
             TextRetriever retriever = new TextRetriever();
+            text = retriever.getText();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+		showSplash();
+        
 	}
 }
