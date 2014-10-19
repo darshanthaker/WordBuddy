@@ -18,9 +18,11 @@ public class Splash extends JWindow {
 
 	private String[] results;
 	private String text;
+	private JLabel copyrt;
+	private JPanel content;
 
 	public void showSplash() {
-		JPanel content = (JPanel)getContentPane();
+		content = (JPanel) getContentPane();
 		content.setBackground(Color.white);
 
 		// Set the window's bounds, centering the window
@@ -32,19 +34,18 @@ public class Splash extends JWindow {
 		int y = (int) p.getY();
 		setBounds(x, y, width, height);
 		
-		// Build the screen
-		JLabel copyrt = new JLabel("Word", JLabel.CENTER);
-		copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
-		content.add(copyrt, BorderLayout.NORTH);
-		
-		
         MouseListener listener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try
                 {
-                    TextRetriever retriever = new TextRetriever();
-                    text = retriever.getText();
+                    //TextRetriever retriever = new TextRetriever();
+                    //text = retriever.getText();
+                	if (e.getY() >= 0 && e.getY() <= 30)
+                	{
+                		TextRetriever retriever = new TextRetriever();
+                		retriever.write(results[0]);
+                	}
                 }
                 catch (Exception f)
                 {
@@ -72,20 +73,40 @@ public class Splash extends JWindow {
             {
             }
         };
+        
+    	// Build the screen
+        copyrt = new JLabel(text, JLabel.CENTER);
+		copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+		content.add(copyrt, BorderLayout.NORTH);
+		
         FilePoller poller = new FilePoller(text);
 		results = poller.getSynonyms();
+		if (results[0] == null)
+		{
+			results[0] = "Sorry there are no thesaurus entries";
+			for (int i = 1; i <= 4; i++)
+			{
+				results[i] = "";
+			}
+		}
 		System.out.println(Arrays.toString(results));
 		
         JList<String> list = new JList<String>(results);
-		list.setFont(new Font("Sans-Serif", Font.BOLD, 24));
+		list.setFont(new Font("Sans-Serif", Font.BOLD, 19));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
         list.addMouseListener(listener);
        
 		
 		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
+		copyrt.updateUI();
 
 		// Display it
 		setVisible(true);
+	}
+	
+	public void clear()
+	{
+		content.removeAll();
 	}
 
 	private Point getWindowPlacement() {
@@ -98,7 +119,7 @@ public class Splash extends JWindow {
 	}
 
 	public void start() {
-		// Throw a nice little title page up on the screen firs
+		// Throw a nice little title page up on the screen first
 		// Normally, we'd call splash.showSplash() and get on with the program.
 		// But, since this is only a test...
 		try

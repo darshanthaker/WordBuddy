@@ -13,13 +13,35 @@ public class TextRetriever
 {
 	
 	String text;
+	Robot robot = new Robot();
 
     public TextRetriever() throws Exception
     {
-        try 
+    	text = "";
+    }
+    
+    public void write(String word)
+    {
+    	for (int i = 0; i < word.length(); ++i)
+    	{
+    		int id = word.charAt(i);
+    		try
+    		{
+    			robot.keyPress(id);
+    			Thread.sleep(20);
+    			robot.keyRelease(id);
+    		}
+    		catch (Exception e)
+    		{
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    public String getText() throws Exception
+    {
+    	try 
         {
-                Robot robot = new Robot();
-
                 robot.keyPress(157);
                 robot.keyPress(KeyEvent.VK_C);
                 Thread.sleep(20);
@@ -35,10 +57,6 @@ public class TextRetriever
         {
             e.printStackTrace();
         }
-    }
-    
-    public String getText()
-    {
     	return text;
     }
 
