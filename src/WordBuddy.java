@@ -6,8 +6,14 @@
 * between Leap Motion and you, your company or other organization.             *
 \******************************************************************************/
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.io.IOException;
 import java.lang.Math;
+
+import javax.swing.JLabel;
+
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 
@@ -41,6 +47,7 @@ class SampleListener extends Listener {
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
         GestureList gestures = frame.gestures();
+        
         for (int i = 0; i < gestures.count(); i++) {
             Gesture gesture = gestures.get(i);
 
@@ -59,6 +66,7 @@ class SampleListener extends Listener {
                     } else {
                         clockwiseness = "counterclockwise";
                         System.out.println("CLOSE WORDS HERE");
+                        gui.clear();
                         gui.setVisible(false);
                     }
 
@@ -76,6 +84,16 @@ class SampleListener extends Listener {
                                + ", angle: " + Math.toDegrees(sweptAngle)
                                + ", " + clockwiseness);
                     break;
+                case TYPE_SCREEN_TAP:
+                	PointerInfo a = MouseInfo.getPointerInfo();
+                	Point b = a.getLocation();
+                	int x = (int) b.getX();
+                	int y = (int) b.getY();
+                	
+//                	TextRetriever retriever = new TextRetriever();
+                	
+//            		retriever.write();
+                	
             }
         }
 
