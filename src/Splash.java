@@ -5,6 +5,7 @@
 // with other applications.
 //
 
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -40,10 +41,9 @@ public class Splash extends JWindow {
 		JList<String> list = new JList<String>(results);
 		list.setFont(new Font("Sans-Serif", Font.BOLD, 24));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
-        KeyListener listener = new KeyListener() {
+        MouseListener listener = new MouseListener() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                System.out.println("CODE IS: " + e.getKeyCode());
+            public void mouseClicked(MouseEvent e) {
                 try
                 {
                     TextRetriever text = new TextRetriever();
@@ -55,17 +55,27 @@ public class Splash extends JWindow {
             }
 
             @Override
-            public void keyReleased(KeyEvent event)
+            public void mouseEntered(MouseEvent event)
             {
             }
 
             @Override
-            public void keyTyped(KeyEvent event)
+            public void mouseExited(MouseEvent event)
+            {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event)
+            {
+            }
+  
+            @Override
+            public void mouseReleased(MouseEvent event)
             {
             }
         };
         
-        list.addKeyListener(listener);
+        list.addMouseListener(listener);
 		
 		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
 
