@@ -1,3 +1,5 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -39,13 +41,38 @@ public class TextRetriever
 
     public static void main(String[] args)
     {
-        try
+        KeyListener listener = new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("CODE IS: " + e.getKeyCode());
+                try
+                {
+                    TextRetriever text = new TextRetriever();
+                }
+                catch (Exception f)
+                {
+                    f.printStackTrace();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent event)
+            {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent event)
+            {
+            }
+        };
+
+        /*try
         {
             TextRetriever text = new TextRetriever();
         }
         catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
     }
 }
