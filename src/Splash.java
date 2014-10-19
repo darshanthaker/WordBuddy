@@ -91,7 +91,7 @@ public class Splash extends JWindow {
 		}
 		System.out.println(Arrays.toString(results));
 		
-        JList<String> list = new JList<String>(results);
+        JList list = new JList(results);
 		list.setFont(new Font("Sans-Serif", Font.BOLD, 19));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
         list.addMouseListener(listener);
