@@ -52,6 +52,13 @@ public class Splash extends JWindow {
 		// Normally, we'd call splash.showSplash() and get on with the program.
 		// But, since this is only a test...
 		showSplash();
-        TextRetriever retriever = new TextRetriever();
+        try
+        {
+            TextRetriever retriever = new TextRetriever();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 	}
 }
