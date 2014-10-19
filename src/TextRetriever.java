@@ -10,12 +10,10 @@ import java.awt.*;
 public class TextRetriever
 {
 
-    public static void main(String[] args) throws Exception
+    public TextRetriever()
     {
         try 
         {
-            for (int i = 0; i < 100; ++i)
-            {
                 Robot robot = new Robot();
 
                 robot.keyPress(157);
@@ -27,8 +25,7 @@ public class TextRetriever
                 Thread.sleep(500);
             
                 String text = getClipboardText();
-                //System.out.println("TEXT IS : " + text);
-            }
+                System.out.println("TEXT IS : " + text);
         }
         catch (AWTException e)
         {
