@@ -40,6 +40,32 @@ public class Splash extends JWindow {
 		JList<String> list = new JList<String>(results);
 		list.setFont(new Font("Sans-Serif", Font.BOLD, 24));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
+        KeyListener listener = new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("CODE IS: " + e.getKeyCode());
+                try
+                {
+                    TextRetriever text = new TextRetriever();
+                }
+                catch (Exception f)
+                {
+                    f.printStackTrace();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent event)
+            {
+            }
+
+            @Override
+            public void keyTyped(KeyEvent event)
+            {
+            }
+        };
+        
+        list.addKeyListener(listener);
 		
 		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
 
