@@ -90,7 +90,6 @@ class SampleListener extends Listener {
                 	int x = (int) b.getX();
                 	int y = (int) b.getY();
                 	String word = gui.checkElement(x, y);
-                	
 				TextRetriever retriever;
 				try {
 					retriever = new TextRetriever();
@@ -99,7 +98,6 @@ class SampleListener extends Listener {
 					e.printStackTrace();
 				}
                		
-                	
             }
         }
 
