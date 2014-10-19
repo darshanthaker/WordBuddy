@@ -25,6 +25,7 @@ class SampleListener extends Listener {
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
         controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+        controller.setPolicyFlags(Controller.PolicyFlag.POLICY_BACKGROUND_FRAMES);
     }
 
     public void onDisconnect(Controller controller) {
@@ -54,6 +55,7 @@ class SampleListener extends Listener {
                         clockwiseness = "clockwise";
                         System.out.println("OPEN UP WORDS HERE");
                         gui.start();
+                        gui.setAlwaysOnTop(true);
                     } else {
                         clockwiseness = "counterclockwise";
                         System.out.println("CLOSE WORDS HERE");
