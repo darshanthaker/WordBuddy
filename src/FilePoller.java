@@ -1,15 +1,16 @@
-package WordBuddy;
-
 import java.io.IOException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class FilePoller {
 		
 	public static String entry;	
-	public static ArrayList<String> synonyms = new ArrayList<String>();
+	public static String[] synonyms = new String[5];
 	
 	public FilePoller(String entry)
 	{
@@ -17,7 +18,7 @@ public class FilePoller {
 			String url = "http://www.thesaurus.com/browse/" + entry;
 			String htmlFile = FilePoller.parseFile(url);
 			findSynonyms(htmlFile);
-			//System.out.println(getSynonyms());	
+			System.out.println(Arrays.toString(getSynonyms()));	
 		} catch (IOException e) {
 			e.printStackTrace();	
 		}
@@ -37,7 +38,7 @@ public class FilePoller {
 		return htmlString;
 	} 
 	
-	public static ArrayList<String> getSynonyms()
+	public static String[] getSynonyms()
 	{
 		return synonyms;
 	}
@@ -51,7 +52,7 @@ public class FilePoller {
 		String url;
 		String precedent = ("<a href=\"http://www.thesaurus.com/browse/");
 		int i = html.indexOf("<div id=\"synonyms-0\" class=\"synonyms\">");
-		while(i >= 0 && k <= 5) {
+		while(i >= 0 && k < 5) {
 		     i = html.indexOf(precedent, i+1);
 		     firstquote = html.indexOf("\"",i+1);
 		     secondquote = html.indexOf("\"", firstquote + 1);
@@ -59,7 +60,7 @@ public class FilePoller {
 		     beginningindex = url.indexOf("browse/") + 7;
 		     word = url.substring(beginningindex, url.length());
 		     //System.out.println("The word is: " + word);
-		     synonyms.add(word);
+		     synonyms[k] = word;
 			 k++;
 			}
 	}
@@ -67,8 +68,8 @@ public class FilePoller {
 	// main method
 	
 	public static void main (String [] args) {
-		String entry = "taciturn";
-		
+		String entry = "minimum";
+		//System.out.println("go");
 		FilePoller poller = new FilePoller(entry);
 				
 	}
