@@ -90,10 +90,6 @@ class SampleListener extends Listener {
                 	int x = (int) b.getX();
                 	int y = (int) b.getY();
                 	
-//                	TextRetriever retriever = new TextRetriever();
-                	
-//            		retriever.write();
-                	
             }
         }
 

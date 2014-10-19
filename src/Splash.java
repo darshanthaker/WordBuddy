@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.awt.Toolkit;
 
 import javax.swing.*;
 
@@ -20,14 +21,16 @@ public class Splash extends JWindow {
 	private String text;
 	private JLabel copyrt;
 	private JPanel content;
+	
+	private int width, height;
 
 	public void showSplash() {
 		content = (JPanel) getContentPane();
 		content.setBackground(Color.white);
 
 		// Set the window's bounds, centering the window
-		int width = 450;
-		int height = 500;
+		width = 450;
+		height = 500;
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		Point p = getWindowPlacement();
 		int x = (int) p.getX();
@@ -112,7 +115,18 @@ public class Splash extends JWindow {
 	private Point getWindowPlacement() {
 		double x = MouseInfo.getPointerInfo().getLocation().getX();
 		double y = MouseInfo.getPointerInfo().getLocation().getY();
-
+		
+		Dimension dimen = Toolkit.getDefaultToolkit().getScreenSize();
+		double screenHeight = dimen.getHeight();
+		double screenWidth = dimen.getWidth();
+		 
+		if (x + width > screenWidth) {
+			x = x - width;
+		} 
+		if(y + height > screenHeight) {
+			y = y - height;
+		}
+		
 		Point p = new Point();
 		p.setLocation(x, y);
 		return p;
