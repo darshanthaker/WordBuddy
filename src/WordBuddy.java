@@ -89,10 +89,16 @@ class SampleListener extends Listener {
                 	Point b = a.getLocation();
                 	int x = (int) b.getX();
                 	int y = (int) b.getY();
+                	String word = gui.checkElement(x, y);
                 	
-//                	TextRetriever retriever = new TextRetriever();
-                	
-//            		retriever.write();
+				TextRetriever retriever;
+				try {
+					retriever = new TextRetriever();
+					retriever.write(word);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+               		
                 	
             }
         }

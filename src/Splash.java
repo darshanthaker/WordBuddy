@@ -20,6 +20,7 @@ public class Splash extends JWindow {
 	private String text;
 	private JLabel copyrt;
 	private JPanel content;
+	private JList list;
 
 	public void showSplash() {
 		content = (JPanel) getContentPane();
@@ -34,45 +35,7 @@ public class Splash extends JWindow {
 		int y = (int) p.getY();
 		setBounds(x, y, width, height);
 		
-        MouseListener listener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try
-                {
-                    //TextRetriever retriever = new TextRetriever();
-                    //text = retriever.getText();
-                	if (e.getY() >= 0 && e.getY() <= 30)
-                	{
-                		TextRetriever retriever = new TextRetriever();
-                		retriever.write(results[0]);
-                	}
-                }
-                catch (Exception f)
-                {
-                    f.printStackTrace();
-                }
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent event)
-            {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent event)
-            {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent event)
-            {
-            }
-  
-            @Override
-            public void mouseReleased(MouseEvent event)
-            {
-            }
-        };
+        
         
     	// Build the screen
         copyrt = new JLabel(text, JLabel.CENTER);
@@ -91,10 +54,10 @@ public class Splash extends JWindow {
 		}
 		System.out.println(Arrays.toString(results));
 		
-        JList<String> list = new JList<String>(results);
+        list = new JList(results);
 		list.setFont(new Font("Sans-Serif", Font.BOLD, 19));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
-        list.addMouseListener(listener);
+        //list.addMouseListener(listener);
        
 		
 		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
@@ -107,6 +70,35 @@ public class Splash extends JWindow {
 	public void clear()
 	{
 		content.removeAll();
+	}
+	
+	public String checkElement(int x, int y)
+	{
+		Point p = getWindowPlacement();
+		int mx = (int) p.getX();
+		int my = (int) p.getY();
+		
+		if (y >= my && y <= my + 30)
+		{
+			return results[0];
+		}
+		else if (y >= my + 30 && y <= my + 60)
+		{
+			return results[1];
+		}
+		else if (y >= my + 60 && y <= my + 90)
+		{
+			return results[2];
+		}
+		else if (y >= my + 90 && y <= my + 120)
+		{
+			return results[3];
+		}
+		else if (y >= my + 120 && y <= my + 150)
+		{
+			return results[4];
+		}
+		return text;
 	}
 
 	private Point getWindowPlacement() {
