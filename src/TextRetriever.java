@@ -10,7 +10,7 @@ import java.awt.*;
 public class TextRetriever
 {
 
-    public TextRetriever()
+    public TextRetriever() throws Exception
     {
         try 
         {
@@ -27,7 +27,7 @@ public class TextRetriever
                 String text = getClipboardText();
                 System.out.println("TEXT IS : " + text);
         }
-        catch (AWTException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -35,5 +35,17 @@ public class TextRetriever
 
     static String getClipboardText() throws Exception {
         return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+    }
+
+    public static void main(String[] args)
+    {
+        try
+        {
+            TextRetriever text = new TextRetriever();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
