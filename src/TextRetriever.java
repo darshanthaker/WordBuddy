@@ -24,7 +24,10 @@ public class TextRetriever
     {
     	for (int i = 0; i < word.length(); ++i)
     	{
-    		int id = word.charAt(i);
+    		//System.out.println("word = " + word);
+    		int id = word.charAt(i) - 32;
+    		if (id == 0) id += 32;
+    		//System.out.println(id);
     		try
     		{
     			robot.keyPress(id);
@@ -51,7 +54,7 @@ public class TextRetriever
                 Thread.sleep(500);
             
                 text = getClipboardText();
-                System.out.println("TEXT IS : " + text);
+                //System.out.println("TEXT IS : " + text);
         }
         catch (Exception e)
         {
@@ -62,42 +65,5 @@ public class TextRetriever
 
     static String getClipboardText() throws Exception {
         return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-    }
-
-    public static void main(String[] args)
-    {
-        KeyListener listener = new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                System.out.println("CODE IS: " + e.getKeyCode());
-                try
-                {
-                    TextRetriever text = new TextRetriever();
-                }
-                catch (Exception f)
-                {
-                    f.printStackTrace();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent event)
-            {
-            }
-
-            @Override
-            public void keyTyped(KeyEvent event)
-            {
-            }
-        };
-
-        /*try
-        {
-            TextRetriever text = new TextRetriever();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }*/
     }
 }

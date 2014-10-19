@@ -22,7 +22,7 @@ class SampleListener extends Listener {
 	Splash gui = new Splash();
 	
     public void onInit(Controller controller) {
-        System.out.println("Initialized");
+    	System.out.println("Initialized");
     }
 
     public void onConnect(Controller controller) {
@@ -55,17 +55,17 @@ class SampleListener extends Listener {
                 case TYPE_CIRCLE:
                     CircleGesture circle = new CircleGesture(gesture);
                     
+                    gui.clear();
+                    
                     // Calculate clock direction using the angle between circle normal and pointable
                     String clockwiseness;
                     if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI/2) {
                         // Clockwise if angle is less than 90 degrees
                         clockwiseness = "clockwise";
-                        System.out.println("OPEN UP WORDS HERE");
                         gui.start();
                         gui.setAlwaysOnTop(true);
                     } else {
                         clockwiseness = "counterclockwise";
-                        System.out.println("CLOSE WORDS HERE");
                         gui.clear();
                         gui.setVisible(false);
                     }
@@ -77,12 +77,12 @@ class SampleListener extends Listener {
                         sweptAngle = (circle.progress() - previousUpdate.progress()) * 2 * Math.PI;
                     }
 
-                    System.out.println("  Circle id: " + circle.id()
-                               + ", " + circle.state()
-                               + ", progress: " + circle.progress()
-                               + ", radius: " + circle.radius()
-                               + ", angle: " + Math.toDegrees(sweptAngle)
-                               + ", " + clockwiseness);
+//                    System.out.println("  Circle id: " + circle.id()
+//                               + ", " + circle.state()
+//                               + ", progress: " + circle.progress()
+//                               + ", radius: " + circle.radius()
+//                               + ", angle: " + Math.toDegrees(sweptAngle)
+//                               + ", " + clockwiseness);
                     break;
                 case TYPE_SCREEN_TAP:
                 	PointerInfo a = MouseInfo.getPointerInfo();
@@ -90,13 +90,16 @@ class SampleListener extends Listener {
                 	int x = (int) b.getX();
                 	int y = (int) b.getY();
                 	String word = gui.checkElement(x, y);
-				TextRetriever retriever;
-				try {
-					retriever = new TextRetriever();
-					retriever.write(word);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+                	if (word != null)
+                	{
+                		TextRetriever retriever;
+                		try {
+                			retriever = new TextRetriever();
+                			retriever.write(word);
+                		} catch (Exception e) {
+                			e.printStackTrace();
+                		}
+                	}
                		
             }
         }

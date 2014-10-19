@@ -9,8 +9,9 @@ import java.util.Scanner;
 
 public class FilePoller {
 		
+	final static int NUM_OF_WORDS = 10;
 	public static String entry;	
-	public static String[] synonyms = new String[5];
+	public static String[] synonyms = new String[NUM_OF_WORDS];
 	
 	public FilePoller(String entry)
 	{
@@ -52,25 +53,25 @@ public class FilePoller {
 		String url;
 		String precedent = ("<a href=\"http://www.thesaurus.com/browse/");
 		int i = html.indexOf("<div id=\"synonyms-0\" class=\"synonyms\">");
-		while(i >= 0 && k < 5) {
+		while(i >= 0 && k < NUM_OF_WORDS) {
 		     i = html.indexOf(precedent, i+1);
 		     firstquote = html.indexOf("\"",i+1);
 		     secondquote = html.indexOf("\"", firstquote + 1);
 		     url = html.substring(firstquote, secondquote);
 		     beginningindex = url.indexOf("browse/") + 7;
 		     word = url.substring(beginningindex, url.length());
-		     //System.out.println("The word is: " + word);
+		     word = word.replaceAll("%20", " ");
 		     synonyms[k] = word;
 			 k++;
 			}
 	}
 							
-	// main method
-	
-	public static void main (String [] args) {
-		String entry = "minimum";
-		//System.out.println("go");
-		FilePoller poller = new FilePoller(entry);
-				
-	}
+//	// main method
+//	
+//	public static void main (String [] args) {
+//		String entry = "minimum";
+//		//System.out.println("go");
+//		FilePoller poller = new FilePoller(entry);
+//				
+//	}
 }

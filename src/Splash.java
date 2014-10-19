@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.awt.Toolkit;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class Splash extends JWindow {
 
@@ -22,8 +23,8 @@ public class Splash extends JWindow {
 	private JLabel copyrt;
 	private JPanel content;
 	private JList list;
-	private int width, height;
-
+	private int width, height, mx, my;
+	
 	public void showSplash() {
 		content = (JPanel) getContentPane();
 		content.setBackground(Color.white);
@@ -33,11 +34,9 @@ public class Splash extends JWindow {
 		height = 500;
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		Point p = getWindowPlacement();
-		int x = (int) p.getX();
-		int y = (int) p.getY();
-		setBounds(x, y, width, height);
-		
-        
+		mx = (int) p.getX();
+		my = (int) p.getY();
+		setBounds(mx, my, width, height);
         
     	// Build the screen
         copyrt = new JLabel(text, JLabel.CENTER);
@@ -60,47 +59,51 @@ public class Splash extends JWindow {
 		list.setFont(new Font("Sans-Serif", Font.BOLD, 19));
 		content.add(new JScrollPane(list), BorderLayout.CENTER);
         //list.addMouseListener(listener);
-       
 		
-		content.setBorder(BorderFactory.createLineBorder(new Color(51, 255, 204), 10));
+		content.setBorder(BorderFactory.createLineBorder(Color.cyan, 10));
 		copyrt.updateUI();
 
 		// Display it
 		setVisible(true);
 	}
 	
+	public void paintComponent(Graphics g) { 
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        int w = getWidth();
+        int h = getHeight();
+        Color color1 = Color.RED;
+        Color color2 = Color.GREEN;
+        GradientPaint gp = new GradientPaint(0, 0,
+                getBackground().brighter().brighter(), 0, getHeight(),
+                getBackground().darker().darker());
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, w, h);
+	}
+	
 	public void clear()
 	{
-		content.removeAll();
+		if (content != null)
+			content.removeAll();
 	}
 	
 	public String checkElement(int x, int y)
 	{
-		Point p = getWindowPlacement();
-		int mx = (int) p.getX();
-		int my = (int) p.getY();
 		
-		if (y >= my && y <= my + 30)
+		//System.out.println("x = " + x);
+		//System.out.println("y = " + y);
+		//System.out.println("mx = " + mx);
+		//System.out.println("my = " + my);
+		
+		for (int i = 1; i <= results.length; i++)
 		{
-			return results[0];
+			if (y >= my + 25*i && y <= my + 25*i + 25)
+			{
+				return results[i - 1];
+			}
 		}
-		else if (y >= my + 30 && y <= my + 60)
-		{
-			return results[1];
-		}
-		else if (y >= my + 60 && y <= my + 90)
-		{
-			return results[2];
-		}
-		else if (y >= my + 90 && y <= my + 120)
-		{
-			return results[3];
-		}
-		else if (y >= my + 120 && y <= my + 150)
-		{
-			return results[4];
-		}
-		return text;
+		return null;
+		
 	}
 
 	private Point getWindowPlacement() {
