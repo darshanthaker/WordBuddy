@@ -12,6 +12,9 @@ import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 
 class SampleListener extends Listener {
+	
+	Splash gui = new Splash();
+	
     public void onInit(Controller controller) {
         System.out.println("Initialized");
     }
@@ -43,16 +46,18 @@ class SampleListener extends Listener {
             switch (gesture.type()) {
                 case TYPE_CIRCLE:
                     CircleGesture circle = new CircleGesture(gesture);
-
+                    
                     // Calculate clock direction using the angle between circle normal and pointable
                     String clockwiseness;
                     if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI/2) {
                         // Clockwise if angle is less than 90 degrees
                         clockwiseness = "clockwise";
                         System.out.println("OPEN UP WORDS HERE");
+                        gui.start();
                     } else {
                         clockwiseness = "counterclockwise";
                         System.out.println("CLOSE WORDS HERE");
+                        gui.setVisible(false);
                     }
 
                     // Calculate angle swept since last frame
